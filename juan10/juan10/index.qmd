@@ -1,0 +1,460 @@
+---
+title: "DISTRIBUCIONES DE FRECUENCIAS"
+subtitle: "TALLER"
+author: 
+  - name: Dagoberto Salgado Horta<br>Nancy Roa Robledo
+    affiliation: "Universidad del Tolima"
+    affiliation-url: "https://www.ut.edu.co/"
+date: today
+lang: es
+title-block-banner: "#98b6ed"
+
+format:
+  html:
+    page-layout: full
+    fontsize: 14pt
+    toc: true
+    toc-location: right
+    number-sections: true
+    code-fold: true
+    code-summary: "Ver código"
+    theme: dark
+    highlight-style: monokai
+    html-math-method: katex
+    smooth-scroll: true
+    link-external-newwindow: true
+    code-overflow: scroll
+    favicon: favicon.ico
+    
+editor: visual
+
+knitr:
+  opts_chunk:
+    message: false
+    warning: false
+    fig.align: center
+    fig.width: 6
+    fig.height: 6
+    out.width: "70%"
+---
+
+```{r setup}
+options(
+  knitr.table.format = "html",
+  scipen = 999
+)
+```
+
+```{=html}
+<div style="position:absolute; top:10px; right:10px;">
+<img src="Logo_ut.png" width="150">
+</div>
+```
+
+```{=html}
+<style>
+body{
+  background-color:#f7f6ed;
+  font-size:130%;
+  text-align:justify;
+}
+</style>
+```
+
+# .Cargar paquetes
+
+```{r}
+ipak <- function(pkg){
+
+  options(repos = c(CRAN="https://cloud.r-project.org"))
+
+  new.pkg <- pkg[!(pkg %in% rownames(installed.packages()))]
+
+  if(length(new.pkg)) install.packages(new.pkg, dependencies = TRUE)
+
+  invisible(lapply(pkg, function(p)
+    suppressPackageStartupMessages(library(p, character.only = TRUE))
+  ))
+}
+
+packages <- c("tidyverse","kableExtra","psych","readxl")
+
+ipak(packages)
+```
+
+
+La distribución de frecuencias, es un método utilizado para organizar y resumir información. Bajo este método, los datos recolectados se ordenan y clasifican, indicándonos la frecuencia o sea el número de veces que se repiten.
+
+Formalmente, si se tiene una muestra de tamaño $n$ formada por observaciones de una variable $X$ $$X=x1,x2,x3,…,xn$$ Se podrá decir también, que nos permite manejar grandes cantidades de información en espacios reducidos, en formas de cuadros o tablas, complementadas con gráficas.
+
+Por población o universo, se entiende como un conjunto de medidas para ser aplicadas a una característica cuantitativa, o como el recuento de todas las unidades que presentan una característica común, siendo ésta cualitativa. También se puede definir a la población como un conjunto de elementos o unidades. Lo que se estudia en una unidad o elemento son sus características.
+
+Cuando se toman todas las unidades o elementos de la población, se habla de una investigación ex-haustiva o censo. Si sólo se investiga una parte, se le considera como investigación parcial o muestra.
+
+**La muestra**: la muestra,para que sea representativa de la población, requiere que las unidades o elementos sean seleccionadas al azar, en tal forma que cada una de ellas tenga la misma posibilidad de ser seleccionada.
+
+Se usan letras mayúsculas o letras del alfabeto griego como símbolos en poblaciones, en cambio, en la muestras se emplean letras minúsculas.
+
+Los caracteres de los elementos de una población pueden ser cualitativos o cuantitativos, Los datos cualitativos, denominados también atributos, son todos aquellos elementos que pueden ser descritos cualitativamente, es decir mediante palabras; son ejemplos de atributos: la clasificación de los alumnos de una universidad por lugar de origen; clasificación de un grupo de personas por ocupación, por cargo, por sexo, etc.
+
+Los caracteres cuantitativos denominados variables, son todas aquellas características susceptibles de ser expresadas cuantitativamente, es decir, mediante números. Ejemplo: peso, estatura, edad, número de hijos, salarios, etc.
+
+**Tipos de variables:**
+
+Las variables se dividen en discretas y continuas. Es de tener en cuenta que esta clasificación tiene más valor teórico que práctico.
+
+**Las variables discretas:** son aquéllas que admiten solamente valores enteros, es decir, no tienen valores intermedios. Ejemplo: el número de hijos por familia será discreta, ya que no se podrá decir que una familia tiene dos hijos y medio; el número de empleados por departamento en una empresa, etc.
+
+**Las variables continuas:** son aquéllas que admiten valores fraccionarios, pudiéndose establecer in tervalos. Ejemplo: la estatura de una persona que mide un metro con setenta centímetros; que pesa sesen ta kilos, una libra y cuatro onzas, etc.
+
+## . TIPOS DE FRECUENCIA
+
+En una tabla de distribución de frecuencias se utilizan diferentes medidas para describir la presencia de cada valor o intervalo.
+
+### **Frecuencia Absoluta**
+
+La **frecuencia absoluta** representa el número de veces que aparece un valor o clase en el conjunto de datos.
+
+Se denota por:
+
+$$
+f_i
+$$
+
+donde:
+
+-   $i = 1,2,3,\ldots,k$
+-   $k$ es el número de categorías o clases.
+
+La suma de todas las frecuencias absolutas es igual al tamaño de la muestra:
+
+$$
+\sum_{i=1}^{k} f_i = n
+$$
+
+### **Frecuencia Absoluta Acumulada**
+
+La **frecuencia absoluta acumulada** representa la suma progresiva de las frecuencias absolutas hasta una determinada categoría.
+
+Se denota por:
+
+$$
+F_i
+$$
+
+y se calcula como:
+
+$$
+F_i = \sum_{j=1}^{i} f_j
+$$
+
+La última frecuencia acumulada siempre es igual al tamaño total de la muestra:
+
+$$
+F_k = n
+$$
+
+### **Frecuencia Relativa**
+
+La **frecuencia relativa** expresa la proporción de observaciones que corresponde a una categoría respecto al total de datos.
+
+Se denota por:
+
+$$
+h_i
+$$
+
+y se calcula como:
+
+$$
+h_i = \frac{f_i}{n}
+$$
+
+Propiedad:
+
+$$
+0 \le h_i \le 1
+$$
+
+y
+
+$$
+\sum_{i=1}^{k} h_i = 1
+$$
+
+### **Frecuencia Relativa Acumulada**
+
+La **frecuencia relativa acumulada** representa la suma progresiva de las frecuencias relativas.
+
+Se denota por:
+
+$$
+H_i
+$$
+
+y se calcula como:
+
+$$
+H_i = \sum_{j=1}^{i} h_j
+$$
+
+Propiedad:
+
+$$
+H_k = 1
+$$
+
+### **Frecuencia Porcentual**
+
+La **frecuencia porcentual** expresa la frecuencia relativa en porcentaje.
+
+Se calcula como:
+
+$$
+p_i = h_i \times 100
+$$
+
+Propiedad:
+
+$$
+\sum_{i=1}^{k} p_i = 100
+$$
+
+## . DISTRIBUCIÓN DE FRECUENCIA PARA DATOS AGRUPADOS
+
+Cuando los datos son numerosos, se agrupan en **intervalos de clase**.
+
+Un intervalo de clase se define como:
+
+$$
+(L_i, L_s)
+$$
+
+donde:
+
+-   $L_i$ = límite inferior
+-   $L_s$ = límite superior
+
+### **Amplitud de Clase**
+
+La **amplitud de clase** se calcula como:
+
+$$
+A = L_s - L_i
+$$
+
+o también mediante:
+
+$$
+A = \frac{R}{k}
+$$
+
+donde:
+
+-   $R$ = rango de los datos
+-   $k$ = número de clases
+
+### **Rango**
+
+El **rango** mide la dispersión total de los datos:
+
+$$
+R = X_{max} - X_{min}
+$$
+
+### **Marca de Clase**
+
+La **marca de clase** representa el punto medio de cada intervalo:
+
+$$
+x_i = \frac{L_i + L_s}{2}
+$$
+
+## . PROPIEDADES DE LA DISTRIBUCIÓN DE FRECUENCIAS
+
+Las distribuciones de frecuencias poseen varias propiedades fundamentales:
+
+**1. Conservación del tamaño de la muestra**
+
+$$
+\sum_{i=1}^{k} f_i = n
+$$
+
+**2. Suma de frecuencias relativas**
+
+$$
+\sum_{i=1}^{k} h_i = 1
+$$
+
+**3. Suma de frecuencias porcentuales**
+
+$$
+\sum_{i=1}^{k} p_i = 100
+$$
+
+**4. Monotonía de las frecuencias acumuladas**
+
+Las frecuencias acumuladas son **crecientes**:
+
+$$
+F_1 \le F_2 \le F_3 \le \cdots \le F_k
+$$
+
+**5. Último valor acumulado**
+
+$$
+F_k = n
+$$
+
+y
+
+$$
+H_k = 1
+$$
+
+## . ESTRUCTURA DE UNA TABLA DE DISTRIBUCIÓN DE FRECUENCIA
+
+Una tabla típica contiene las siguientes columnas:
+
+| Clase | Marca de clase | Frecuencia absoluta | Frecuencia acumulada | Frecuencia relativa | Frecuencia relativa acumulada |
+|------------|------------|------------|------------|------------|------------|
+| $C_i$ | $x_i$ | $f_i$ | $F_i$ | $h_i$ | $H_i$ |
+
+<br>
+
+# .TABLAS DE DOBLE ENTRADA
+
+Una **tabla de doble entrada** (o tabla de contingencia) es una herramienta que permite organizar y resumir datos correspondientes a **dos variables simultáneamente**, mostrando cómo se distribuyen de manera conjunta.
+
+## **COMPONENTES PRINCIPALES**
+
+Una tabla de doble entrada está compuesta por:
+
+1.  **Filas** Representan las categorías de una primera variable (Variable A).
+
+2.  **Columnas** Representan las categorías de una segunda variable (Variable B).
+
+3.  **Celdas internas** Contienen las **frecuencias** (absolutas o relativas) que corresponden a la combinación de ambas variables.
+
+4.  **Totales marginales**
+
+    -   Totales por fila (suma horizontal)
+    -   Totales por columna (suma vertical)
+
+5.  **Total general** Suma total de todas las observaciones (n)
+
+## **ESTRUCTURA GENERAL**
+
+|                  | Categoría B1 | Categoría B2 | ... | Total |
+|------------------|--------------|--------------|-----|-------|
+| **Categoría A1** | n₁₁          | n₁₂          | ... | n₁•   |
+| **Categoría A2** | n₂₁          | n₂₂          | ... | n₂•   |
+| **...**          | ...          | ...          | ... | ...   |
+| **Total**        | n•₁          | n•₂          | ... | n     |
+
+<br>
+
+## **NOTACIÓN**
+
+-   $n_{ij}$: frecuencia en la fila *i* y columna *j*
+-   $n_{i\cdot}$: total de la fila *i*
+-   $n_{\cdot j}$: total de la columna *j*
+-   $n$ : total general
+
+# . RECONOCIMIENTO DE LA BASE DE DATOS
+
+La presente base de datos corresponde a información de carácter educativo, en la cual se recopilan diferentes variables relacionadas con aspectos académicos y sociodemográficos de los estudiantes. Este conjunto de datos permite desarrollar un análisis descriptivo mediante la organización y síntesis de la información a través de distribuciones de frecuencia.
+
+En la base se identifican variables como género, nivel educativo, estrato, número de cursos, horas de estudio, promedio académico, porcentaje de asistencia, uso de tecnología y nivel de satisfacción, lo que posibilita un abordaje integral de la información. A partir de estos datos, se busca identificar patrones y tendencias que faciliten la comprensión del comportamiento de la población analizada.
+
+Este reconocimiento inicial constituye el punto de partida para la aplicación de herramientas estadísticas que permitan una adecuada interpretación de los datos.
+
+
+# . CARGAR DATOS
+
+primero, cargamos las librerias necesarias y leemos el archivo Excel.
+
+## . EN FORMATO xlsx
+
+```{r}
+educacion <- read_excel("educacion.xlsx")
+
+```
+
+# . EXPORTAR EL DATASET
+
+**MOSTRAR**
+
+```{r}
+head(educacion)
+```
+
+**TIPOS DE VARIABLES**
+
+```{r}
+glimpse(educacion)
+```
+
+**NOMBRES DE VARIABLES**
+
+```{r}
+educacion %>% names
+```
+
+**CANTIDAD DE VARIABLES**
+
+```{r}
+educacion %>% names %>% length
+```
+
+**TRANSFORMAR VARIABLES**
+
+```{r}
+library(kableExtra)
+
+educacion <- educacion %>%
+  rename_with(trimws) %>%
+  mutate(
+    # 🔵 Cualitativas
+    Genero = trimws(Genero) %>% as.factor(),
+    
+    Nivel_Educativo = trimws(Nivel_Educativo) %>% as.factor(),
+    
+    Tecnologia = trimws(Tecnologia) %>% as.factor(),
+    
+    Satisfaccion = trimws(Satisfaccion) %>% as.factor(),
+    
+    # 🔥 Estrato BIEN HECHO
+    Estrato = trimws(Estrato),
+    Estrato = factor(Estrato, 
+                     levels = c("Bajo", "Medio", "Alto"), 
+                     ordered = TRUE),
+    
+    # 🟢 Cuantitativas
+    Cursos = as.integer(Cursos),
+    Horas = as.numeric(Horas),
+    Promedio = as.numeric(Promedio),
+    `Asistencia (%)` = as.numeric(`Asistencia (%)`)
+  )
+```
+
+# VARIABLES CUANTITATIVAS
+
+## Cuantitativas Discretas
+
+### Estrato
+
+```{r}
+educacion <- educacion %>%
+  rename_with(trimws) %>%
+  mutate(
+    Estrato = trimws(Estrato),
+    Estrato = tolower(Estrato),
+    Estrato = recode(Estrato,
+                     "bajo" = "Bajo",
+                     "medio" = "Medio",
+                     "alto" = "Alto"),
+    Estrato = factor(Estrato, levels = c("Bajo", "Medio", "Alto"), ordered = TRUE)
+  )
+```
+
